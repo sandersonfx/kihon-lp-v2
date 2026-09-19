@@ -12,4 +12,12 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Deploy é no Coolify (Docker/Node), não Cloudflare Workers — o preset
+  // padrão do Lovable ("cloudflare-module") gera um worker.js que não
+  // roda fora do runtime da Cloudflare. "node-server" gera um servidor
+  // Node.js portável (.output/server/index.mjs), o formato que qualquer
+  // Dockerfile/Coolify consegue rodar com `node .output/server/index.mjs`.
+  nitro: {
+    preset: "node-server",
+  },
 });

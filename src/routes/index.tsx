@@ -28,6 +28,44 @@ import profissionais from "../assets/profissionais.jpeg";
 
 const whatsappUrl = "https://api.whatsapp.com/send?phone=551123660490";
 
+// Link direto do WhatsApp (usado nos <a>, que o script injetado em
+// __root.tsx já reescreve pro link de rastreamento automaticamente).
+// O formulário de contato NÃO é um <a> — dispara window.open() no JS, o
+// que passa batido pelo reescritor de links baseado em DOM. Por isso o
+// submit monta a URL de rastreamento manualmente aqui, com a mesma base/
+// parâmetros do script injetado, senão esse caminho de conversão fica
+// fora da atribuição (Funil Visual, UTM, Meta CAPI).
+function buildTrackedWhatsAppUrl(message: string): string {
+  const base =
+    "https://api-claraia.claraia.com/tracking/redirect?company_id=c37a2390-a9db-4451-ad99-1d92086ab794&config_id=987d9192-b9fc-4a9f-bccb-7de95ab0d677&code_pattern=%5BSENHA+xxxx%5D&phone=551123660490";
+  try {
+    const params = new URLSearchParams(window.location.search);
+    params.set("landing_page_url", window.location.href);
+    params.set("referrer_url", document.referrer || "");
+    const ua = navigator.userAgent.toLowerCase();
+    params.set(
+      "device",
+      /bot|crawl|spider/.test(ua)
+        ? "bot"
+        : /mobile|android|iphone|ipod/.test(ua)
+          ? "mobile"
+          : /tablet|ipad/.test(ua)
+            ? "tablet"
+            : "desktop",
+    );
+    params.set("button_text", "Formulário de contato");
+    // Some depois do código de rastreio ([SENHA xxxx]) gerado no servidor
+    // — nunca substitui, senão o webhook perde como casar a mensagem com
+    // esse clique em traffic_history.
+    params.set("custom_message", message);
+    return `${base}&${params.toString()}`;
+  } catch {
+    // Se algo falhar (ex: sem window.location por algum motivo), não
+    // trava a conversão — cai no link direto do WhatsApp sem atribuição.
+    return `${whatsappUrl}&text=${encodeURIComponent(message)}`;
+  }
+}
+
 const services = [
   { title: "Cortes", detail: "Cacheado, oriental e curto", image: cortes },
   { title: "Mechas / Reflexo", detail: "Cor, brilho e personalidade", image: mechas },
@@ -103,7 +141,7 @@ function Index() {
   const submitContact = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const message = `Olá, meu nome é ${name}. Gostaria de agendar um horário. Meu telefone é ${phone}.`;
-    window.open(`${whatsappUrl}&text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    window.open(buildTrackedWhatsAppUrl(message), "_blank", "noopener,noreferrer");
   };
 
   const closeMenu = () => setMenuOpen(false);

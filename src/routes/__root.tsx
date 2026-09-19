@@ -107,6 +107,95 @@ s.parentNode.insertBefore(t,s)}(window,document,'script',
 fbq('init', '364216980927462');
 fbq('track', 'PageView');`,
       },
+      // Rastreamento Claraia/ReativaZap — mesmo script usado nas outras
+      // páginas do Kihon (gerado no painel TrackingManager). Reescreve os
+      // links do WhatsApp pra passar pelo redirect de atribuição e
+      // registra o acesso + tempo de permanência. Sem isso essa página
+      // fica invisível pro Funil Visual/Analytics de Acesso.
+      {
+        children: `(function() {
+  var base = 'https://api-claraia.claraia.com/tracking/redirect?company_id=c37a2390-a9db-4451-ad99-1d92086ab794&config_id=987d9192-b9fc-4a9f-bccb-7de95ab0d677&code_pattern=%5BSENHA+xxxx%5D&phone=551123660490';
+  var shared = new URLSearchParams(window.location.search);
+  shared.set('landing_page_url', window.location.href);
+  shared.set('referrer_url', document.referrer || '');
+  var ua = navigator.userAgent.toLowerCase();
+  shared.set('device', /bot|crawl|spider/.test(ua) ? 'bot' : /mobile|android|iphone|ipod/.test(ua) ? 'mobile' : /tablet|ipad/.test(ua) ? 'tablet' : 'desktop');
+
+  try {
+    fetch('https://api-claraia.claraia.com/tracking/register-pageview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        company_id: 'c37a2390-a9db-4451-ad99-1d92086ab794',
+        pagina: window.location.href,
+        referrer_url: document.referrer,
+        utm_source: shared.get('utm_source'),
+        utm_medium: shared.get('utm_medium'),
+        utm_campaign: shared.get('utm_campaign'),
+        utm_content: shared.get('utm_content'),
+        utm_term: shared.get('utm_term'),
+        gclid: shared.get('gclid'),
+        fbclid: shared.get('fbclid'),
+        user_agent: navigator.userAgent
+      }),
+      keepalive: true
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data.id) {
+        var startedAt = Date.now();
+        var sent = false;
+        var sendEngagement = function() {
+          if (sent) return;
+          sent = true;
+          var elapsed = Date.now() - startedAt;
+          var payload = JSON.stringify({
+            pageview_id: data.id,
+            company_id: 'c37a2390-a9db-4451-ad99-1d92086ab794',
+            time_on_page_ms: elapsed
+          });
+          try {
+            if (navigator.sendBeacon) {
+              var blob = new Blob([payload], { type: 'application/json' });
+              navigator.sendBeacon('https://api-claraia.claraia.com/tracking/register-engagement', blob);
+            } else {
+              fetch('https://api-claraia.claraia.com/tracking/register-engagement', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: true
+              }).catch(function() {});
+            }
+          } catch (e) {}
+        };
+        document.addEventListener('visibilitychange', function() {
+          if (document.visibilityState === 'hidden') sendEngagement();
+        });
+        window.addEventListener('pagehide', sendEngagement);
+      }
+    })
+    .catch(function() {});
+  } catch (e) {}
+
+  function buildLink(a) {
+    var p = new URLSearchParams(shared.toString());
+    var txt = (a.innerText || a.textContent || '').trim() || a.getAttribute('aria-label') || '';
+    if (txt) p.set('button_text', txt);
+    return base + '&' + p.toString();
+  }
+
+  function replaceLinks() {
+    document.querySelectorAll('a').forEach(function(a) {
+      a.href = buildLink(a);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', replaceLinks);
+
+  var observer = new MutationObserver(replaceLinks);
+  observer.observe(document.body, { childList: true, subtree: true });
+})();`,
+      },
     ],
     links: [
       {
