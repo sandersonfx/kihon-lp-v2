@@ -1,0 +1,191 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 3px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 5px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-strong: var(--accent-strong);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-soft: var(--soft);
+  --color-hero: var(--hero);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-hero-muted: var(--hero-muted);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --font-sans: "Montserrat", sans-serif;
+  --font-display: "Sora", sans-serif;
+}
+
+:root {
+  --radius: 0.35rem;
+  --background: oklch(0.975 0.016 57);
+  --foreground: oklch(0.225 0.052 47);
+  --card: oklch(0.995 0.005 60);
+  --card-foreground: oklch(0.225 0.052 47);
+  --primary: oklch(0.225 0.052 47);
+  --primary-foreground: oklch(0.975 0.016 57);
+  --secondary: oklch(0.84 0.05 56);
+  --secondary-foreground: oklch(0.225 0.052 47);
+  --muted: oklch(0.93 0.022 58);
+  --muted-foreground: oklch(0.48 0.03 50);
+  --accent: oklch(0.74 0.075 53);
+  --accent-foreground: oklch(0.2 0.045 45);
+  --accent-strong: oklch(0.54 0.084 49);
+  --border: oklch(0.83 0.03 56);
+  --input: oklch(0.78 0.027 52);
+  --ring: oklch(0.54 0.084 49);
+  --soft: oklch(0.9 0.038 55);
+  --hero: oklch(0.18 0.054 43);
+  --hero-foreground: oklch(0.985 0.006 70);
+  --hero-muted: oklch(0.9 0.02 65);
+  --whatsapp: oklch(0.53 0.178 145);
+  --whatsapp-foreground: oklch(0.99 0.005 145);
+}
+
+* { border-color: var(--border); }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); letter-spacing: 0; }
+button, a, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.hero-section { position: relative; min-height: 800px; overflow: hidden; background: var(--hero); }
+.hero-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 65% 24%, color-mix(in oklab, var(--accent) 24%, transparent), transparent 38%); opacity: .9; }
+.hero-glow { position: absolute; inset: auto 0 0; height: 16rem; background: linear-gradient(to top, var(--hero), transparent); z-index: 4; pointer-events: none; }
+.hero-lines { position: absolute; inset: 8% 6% 4% 52%; border: 1px solid color-mix(in oklab, var(--hero-foreground) 20%, transparent); transform: skewX(-8deg); pointer-events: none; }
+.hero-portrait-wrap { position: absolute; inset: 5.5rem -4rem 0 39%; display: flex; align-items: flex-end; justify-content: center; }
+.hero-portrait { width: min(760px, 64vw); height: min(760px, 88vh); object-fit: contain; object-position: bottom center; filter: drop-shadow(-20px 12px 40px color-mix(in oklab, var(--hero) 55%, transparent)); }
+.hero-scroll { position: absolute; left: 50%; bottom: 1.75rem; z-index: 10; display: flex; align-items: center; gap: .75rem; transform: translateX(-50%); color: var(--hero-muted); text-decoration: none; font-size: .68rem; font-weight: 700; text-transform: uppercase; }
+.hero-scroll span { width: 2.8rem; height: 1px; background: var(--accent); }
+
+.nav-link { color: inherit; text-decoration: none; transition: color .2s ease; }
+.nav-link:hover { color: var(--accent); }
+.icon-button { position: relative; z-index: 50; display: inline-flex; height: 2.75rem; width: 2.75rem; align-items: center; justify-content: center; border: 1px solid color-mix(in oklab, var(--hero-foreground) 24%, transparent); border-radius: 999px; background: color-mix(in oklab, var(--hero) 70%, transparent); color: var(--hero-foreground); }
+.mobile-menu { position: absolute; top: .75rem; left: .75rem; right: .75rem; padding: 6rem 1.5rem 1.5rem; background: color-mix(in oklab, var(--hero) 96%, transparent); border: 1px solid color-mix(in oklab, var(--hero-foreground) 12%, transparent); box-shadow: 0 24px 60px color-mix(in oklab, var(--hero) 60%, transparent); backdrop-filter: blur(18px); }
+.mobile-menu > a:not(.button) { display: block; padding: .9rem 0; color: var(--hero-foreground); border-bottom: 1px solid color-mix(in oklab, var(--hero-foreground) 12%, transparent); text-decoration: none; font-weight: 600; }
+
+.button { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; gap: .6rem; border: 1px solid transparent; border-radius: var(--radius-md); padding: .8rem 1.25rem; text-decoration: none; text-transform: uppercase; font-size: .72rem; line-height: 1; font-weight: 800; transition: transform .2s ease, background-color .2s ease, color .2s ease; cursor: pointer; }
+.button:hover { transform: translateY(-2px); }
+.button-small { min-height: 2.7rem; padding: .65rem 1rem; font-size: .66rem; }
+.button-whatsapp { color: var(--whatsapp-foreground); background: var(--whatsapp); }
+.button-whatsapp:hover { background: color-mix(in oklab, var(--whatsapp) 86%, var(--foreground)); }
+.button-primary { color: var(--primary-foreground); background: var(--primary); }
+.button-outline { color: var(--foreground); border-color: var(--border); background: transparent; }
+.button-light { color: var(--hero); background: var(--hero-foreground); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: .5rem; color: var(--accent-strong); text-transform: uppercase; font-size: .68rem; font-weight: 800; }
+.eyebrow-light { color: var(--accent); }
+.section-shell { padding: 7rem 0; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 3.5rem; }
+.section-heading h2, .location-section h2, .booking-intro h2, .hours-copy h2 { margin: .65rem 0 0; font-family: var(--font-display); font-size: clamp(2.35rem, 5vw, 4.5rem); line-height: 1.02; font-weight: 500; }
+.section-heading > p { max-width: 29rem; margin: 0; color: var(--muted-foreground); line-height: 1.8; }
+
+.services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.service-card { position: relative; min-height: 30rem; overflow: hidden; border-radius: var(--radius-lg); background: var(--primary); color: var(--primary-foreground); }
+.service-card img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transition: transform .55s ease; }
+.service-card:hover img { transform: scale(1.035); }
+.service-overlay { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in oklab, var(--hero) 96%, transparent), transparent 64%); }
+.service-number { position: absolute; top: 1.25rem; right: 1.25rem; color: var(--hero-foreground); font-size: .7rem; font-weight: 700; }
+.service-copy { position: absolute; inset: auto 1.5rem 1.5rem; }
+.service-copy h3 { margin: 0; font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; }
+.service-copy p { margin: .35rem 0 0; color: var(--hero-muted); font-size: .77rem; }
+
+.bg-soft { background: var(--soft); }
+.reasons-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+.reason-image { aspect-ratio: .78; overflow: hidden; border-radius: var(--radius-md); }
+.reason-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.reason-item:hover img { transform: scale(1.04); }
+.reason-item h3 { margin: 0; font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
+.reason-item p { margin: .3rem 0 0; color: var(--muted-foreground); font-size: .75rem; }
+
+.hours-section { background: var(--hero); color: var(--hero-foreground); }
+.hours-image-wrap { min-height: 44rem; overflow: hidden; }
+.hours-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.hours-copy { display: flex; flex-direction: column; justify-content: center; padding: 6rem clamp(2rem, 7vw, 7rem); }
+.hours-list { margin-top: 3rem; border-top: 1px solid color-mix(in oklab, var(--hero-foreground) 20%, transparent); }
+.hours-list div { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid color-mix(in oklab, var(--hero-foreground) 20%, transparent); font-size: .82rem; }
+.hours-list span { color: var(--hero-muted); }
+.hours-list strong { font-weight: 600; }
+
+.location-section { padding: 8rem 0; background: var(--background); }
+.location-section p { line-height: 1.9; }
+.map-panel { position: relative; min-height: 28rem; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--muted); color: var(--foreground); }
+.map-grid { position: absolute; inset: 0; opacity: .42; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 42px 42px; transform: rotate(-5deg) scale(1.1); }
+.map-road { position: absolute; height: .65rem; border: 1px solid var(--border); background: var(--background); transform-origin: left center; }
+.road-one { width: 120%; left: -5%; top: 26%; transform: rotate(20deg); }
+.road-two { width: 120%; left: -4%; top: 66%; transform: rotate(-12deg); }
+.road-three { width: 80%; left: 45%; top: -5%; transform: rotate(74deg); }
+.map-marker { position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: .65rem; transform: translate(-50%, -50%); padding: .75rem 1rem; background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius-md); box-shadow: 0 14px 36px color-mix(in oklab, var(--primary) 24%, transparent); font-size: .78rem; font-weight: 800; white-space: nowrap; }
+
+.booking-section { padding: 7rem 0; background: var(--hero); color: var(--hero-foreground); }
+.booking-intro p { max-width: 28rem; margin-top: 1.5rem; color: var(--hero-muted); line-height: 1.8; }
+.booking-form { display: grid; align-content: center; padding: 2rem; border: 1px solid color-mix(in oklab, var(--hero-foreground) 16%, transparent); background: color-mix(in oklab, var(--hero-foreground) 5%, transparent); }
+.booking-form label { margin: 0 0 .5rem; color: var(--hero-muted); font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+.booking-form input { width: 100%; margin-bottom: 1.5rem; border: 0; border-bottom: 1px solid color-mix(in oklab, var(--hero-foreground) 26%, transparent); outline: none; background: transparent; padding: .65rem 0 1rem; color: var(--hero-foreground); border-radius: 0; }
+.booking-form input::placeholder { color: color-mix(in oklab, var(--hero-muted) 60%, transparent); }
+.booking-form input:focus { border-color: var(--accent); }
+
+.footer { background: var(--hero); color: var(--hero-muted); border-top: 1px solid color-mix(in oklab, var(--hero-foreground) 10%, transparent); }
+.footer p { margin: 0; text-align: center; font-size: .68rem; }
+.footer-social { display: flex; width: 2.65rem; height: 2.65rem; align-items: center; justify-content: center; border: 1px solid color-mix(in oklab, var(--hero-foreground) 20%, transparent); border-radius: 999px; color: var(--hero-foreground); }
+.floating-whatsapp { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 60; display: flex; width: 3.65rem; height: 3.65rem; align-items: center; justify-content: center; border-radius: 999px; background: var(--whatsapp); color: var(--whatsapp-foreground); box-shadow: 0 14px 28px color-mix(in oklab, var(--whatsapp) 34%, transparent); transition: transform .2s ease; }
+.floating-whatsapp:hover { transform: translateY(-3px) scale(1.03); }
+
+@media (max-width: 1023px) {
+  .hero-section { min-height: 760px; }
+  .hero-portrait-wrap { inset: 15rem -6rem 0 20%; opacity: .88; }
+  .hero-portrait { width: 760px; max-width: none; height: 590px; }
+  .hero-section::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--hero) 3%, color-mix(in oklab, var(--hero) 84%, transparent) 48%, transparent); }
+  .hero-lines { inset: 27% -12% 4% 14%; }
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hours-image-wrap { min-height: 35rem; }
+  .hours-copy { padding: 5rem 2rem; }
+}
+
+@media (max-width: 640px) {
+  .hero-section { min-height: 780px; }
+  .hero-grid { align-items: start; padding-top: 7.5rem; }
+  .hero-section::before { background: radial-gradient(circle at 50% 48%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 45%); }
+  .hero-section::after { background: linear-gradient(to bottom, var(--hero) 8%, color-mix(in oklab, var(--hero) 86%, transparent) 42%, transparent 68%); }
+  .hero-portrait-wrap { inset: 15rem -6.5rem 0 -6.5rem; align-items: flex-end; }
+  .hero-portrait { width: 670px; height: 530px; object-fit: contain; object-position: bottom center; }
+  .hero-lines { inset: 35% -30% 3% 12%; }
+  .hero-scroll { display: none; }
+  .section-shell, .location-section, .booking-section { padding: 5rem 0; }
+  .section-heading { display: block; margin-bottom: 2.25rem; }
+  .section-heading > p { margin-top: 1.25rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { min-height: 27rem; }
+  .reasons-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem .8rem; }
+  .reason-image { aspect-ratio: .76; }
+  .reason-item h3 { font-size: 1rem; }
+  .reason-item p { font-size: .67rem; }
+  .hours-image-wrap { min-height: 25rem; }
+  .hours-copy { padding: 4.5rem 1.25rem; }
+  .map-panel { min-height: 22rem; }
+  .booking-form { padding: 1.5rem 1.15rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
