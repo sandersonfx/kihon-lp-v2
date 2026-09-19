@@ -12,36 +12,36 @@ import {
   X,
 } from "lucide-react";
 
-import ambiente from "../assets/ambiente.jpg.asset.json";
-import atendimento from "../assets/atendimento.jpg.asset.json";
-import cortes from "../assets/cortes.webp.asset.json";
-import hero from "../assets/hero.png.asset.json";
-import horario from "../assets/horario.png.asset.json";
-import infantil from "../assets/infantil.jpg.asset.json";
-import logo from "../assets/logo.png.asset.json";
-import manicure from "../assets/manicure.jpg.asset.json";
-import masculino from "../assets/masculino.jpg.asset.json";
-import massagem from "../assets/massagem.jpg.asset.json";
-import mechas from "../assets/mechas.webp.asset.json";
-import produtos from "../assets/produtos.jpg.asset.json";
-import profissionais from "../assets/profissionais.jpeg.asset.json";
+import ambiente from "../assets/ambiente.jpg";
+import atendimento from "../assets/atendimento.jpg";
+import cortes from "../assets/cortes.webp";
+import hero from "../assets/hero.webp";
+import horario from "../assets/horario.png";
+import infantil from "../assets/infantil.jpg";
+import logo from "../assets/logo.png";
+import manicure from "../assets/manicure.jpg";
+import masculino from "../assets/masculino.jpg";
+import massagem from "../assets/massagem.jpg";
+import mechas from "../assets/mechas.webp";
+import produtos from "../assets/produtos.jpg";
+import profissionais from "../assets/profissionais.jpeg";
 
 const whatsappUrl = "https://api.whatsapp.com/send?phone=551123660490";
 
 const services = [
-  { title: "Cortes", detail: "Cacheado, oriental e curto", image: cortes.url },
-  { title: "Mechas / Reflexo", detail: "Cor, brilho e personalidade", image: mechas.url },
-  { title: "Massagem", detail: "Uma pausa para corpo e mente", image: massagem.url },
-  { title: "Corte Masculino", detail: "Precisão e estilo", image: masculino.url },
-  { title: "Corte Infantil", detail: "Cuidado leve e acolhedor", image: infantil.url },
-  { title: "Manicure", detail: "Beleza em cada detalhe", image: manicure.url },
+  { title: "Cortes", detail: "Cacheado, oriental e curto", image: cortes },
+  { title: "Mechas / Reflexo", detail: "Cor, brilho e personalidade", image: mechas },
+  { title: "Massagem", detail: "Uma pausa para corpo e mente", image: massagem },
+  { title: "Corte Masculino", detail: "Precisão e estilo", image: masculino },
+  { title: "Corte Infantil", detail: "Cuidado leve e acolhedor", image: infantil },
+  { title: "Manicure", detail: "Beleza em cada detalhe", image: manicure },
 ];
 
 const reasons = [
-  { title: "Ambiente", text: "Confortável e acolhedor", image: ambiente.url },
-  { title: "Profissionais", text: "Experiência e cuidado", image: profissionais.url },
-  { title: "Produtos", text: "Seleção de alta qualidade", image: produtos.url },
-  { title: "Atendimento", text: "Próximo e personalizado", image: atendimento.url },
+  { title: "Ambiente", text: "Confortável e acolhedor", image: ambiente },
+  { title: "Profissionais", text: "Experiência e cuidado", image: profissionais },
+  { title: "Produtos", text: "Seleção de alta qualidade", image: produtos },
+  { title: "Atendimento", text: "Próximo e personalizado", image: atendimento },
 ];
 
 export const Route = createFileRoute("/")({
@@ -113,7 +113,7 @@ function Index() {
       <header className="absolute inset-x-0 top-0 z-40">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-10 lg:py-7">
           <a href="#inicio" aria-label="Kihon Hair Studio" className="relative z-50">
-            <img src={logo.url} alt="Kihon Hair Studio" className="h-auto w-32 object-contain lg:w-40" />
+            <img src={logo} alt="Kihon Hair Studio" className="h-auto w-32 object-contain lg:w-40" />
           </a>
 
           <nav className="hidden items-center gap-8 text-sm font-semibold text-hero-foreground lg:flex" aria-label="Navegação principal">
@@ -159,7 +159,7 @@ function Index() {
           </div>
 
           <div className="hero-portrait-wrap">
-            <img src={hero.url} alt="Resultado de cabelo produzido no Kihon Hair" className="hero-portrait" />
+            <img src={hero} alt="Resultado de cabelo produzido no Kihon Hair" className="hero-portrait" />
           </div>
         </div>
         <a href="#servicos" className="hero-scroll" aria-label="Ver nossos serviços"><span /> Role para conhecer</a>
@@ -218,7 +218,7 @@ function Index() {
       <section id="horarios" className="hours-section">
         <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
           <div className="hours-image-wrap">
-            <img src={horario.url} alt="Atendimento Kihon Hair" loading="lazy" />
+            <img src={horario} alt="Atendimento Kihon Hair" loading="lazy" />
           </div>
           <div className="hours-copy">
             <span className="eyebrow eyebrow-light"><Clock3 className="size-4" /> Horário de funcionamento</span>
@@ -273,7 +273,7 @@ function Index() {
 
       <footer className="footer">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-5 py-10 md:flex-row lg:px-10">
-          <img src={logo.url} alt="Kihon Hair Studio" className="w-32" />
+          <img src={logo} alt="Kihon Hair Studio" className="w-32" />
           <p>© 2026 Kihon Hair Studio. Todos os direitos reservados.</p>
           <a href="https://www.instagram.com/kihonhair/" target="_blank" rel="noreferrer" className="footer-social" aria-label="Instagram"><Instagram className="size-5" /></a>
         </div>
