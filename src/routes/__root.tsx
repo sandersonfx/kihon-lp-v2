@@ -136,6 +136,7 @@ fbq('track', 'PageView');`,
         utm_term: shared.get('utm_term'),
         gclid: shared.get('gclid'),
         fbclid: shared.get('fbclid'),
+        gad_campaignid: shared.get('gad_campaignid'),
         user_agent: navigator.userAgent
       }),
       keepalive: true
