@@ -72,6 +72,18 @@ function buildTrackedWhatsAppUrl(message: string): string {
   }
 }
 
+// O GTM só dispara o Lead_ClicouWpp nos botões cujo texto é "FALE CONOSCO NO WHATSAPP"
+// (herói e cards de serviço). Os demais botões de WhatsApp disparam o mesmo evento,
+// no mesmo pixel, por aqui — sem mexer no texto, que a Claraia grava como button_text.
+const META_PIXEL_ID = "364216980927462";
+function trackWhatsappClick() {
+  try {
+    (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq?.("trackSingleCustom", META_PIXEL_ID, "Lead_ClicouWpp");
+  } catch {
+    // pixel bloqueado ou ainda não carregado: não atrapalha o clique
+  }
+}
+
 const services = [
   { title: "Cortes", detail: "Cacheado, oriental e curto", image: cortes },
   { title: "Mechas / Reflexo", detail: "Cor, brilho e personalidade", image: mechas },
@@ -151,6 +163,7 @@ function Index() {
   const submitContact = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const message = `Olá, meu nome é ${name}. Gostaria de agendar um horário. Meu telefone é ${phone}.`;
+    trackWhatsappClick();
     window.open(buildTrackedWhatsAppUrl(message), "_blank", "noopener,noreferrer");
   };
 
@@ -166,7 +179,7 @@ function Index() {
             <a className="nav-link" href="#sobre">Sobre</a>
             <a className="nav-link" href="#horarios">Horários</a>
             <a className="nav-link" href="#localizacao">Localização</a>
-            <a className="button button-whatsapp button-small" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer">
+            <a className="button button-whatsapp button-small" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer" onClick={trackWhatsappClick}>
               <WhatsAppIcon className="size-4" /> Agendar
             </a>
           </nav>
@@ -181,7 +194,7 @@ function Index() {
               <a href="#sobre" onClick={closeMenu}>Sobre</a>
               <a href="#horarios" onClick={closeMenu}>Horários</a>
               <a href="#localizacao" onClick={closeMenu}>Localização</a>
-              <a className="button button-whatsapp mt-3" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer">
+              <a className="button button-whatsapp mt-3" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer" onClick={trackWhatsappClick}>
                 <WhatsAppIcon className="size-5" /> Agendar agora
               </a>
             </nav>
@@ -270,7 +283,7 @@ function Index() {
               <div><span>Sábado</span><strong>09h — 18h</strong></div>
               <div><span>Domingo e segunda</span><strong>Fechado</strong></div>
             </div>
-            <a className="button button-light mt-8" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de consultar um horário disponível.")}`} target="_blank" rel="noreferrer">
+            <a className="button button-light mt-8" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de consultar um horário disponível.")}`} target="_blank" rel="noreferrer" onClick={trackWhatsappClick}>
               Consultar disponibilidade <ArrowUpRight className="size-4" />
             </a>
           </div>
@@ -321,7 +334,7 @@ function Index() {
         </div>
       </footer>
 
-      <a className="floating-whatsapp" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer" aria-label="Fale com o Kihon Hair no WhatsApp">
+      <a className="floating-whatsapp" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer" aria-label="Fale com o Kihon Hair no WhatsApp" onClick={trackWhatsappClick}>
         <WhatsAppIcon className="size-7" />
       </a>
     </main>
