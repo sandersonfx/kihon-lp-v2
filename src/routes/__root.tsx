@@ -105,12 +105,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       // fica invisível pro Funil Visual/Analytics de Acesso.
       {
         children: `(function() {
+  var ua = navigator.userAgent.toLowerCase();
+  // Robôs não registram visita nem têm links trocados
+  var bots = ['bot', 'crawl', 'spider', 'slurp', 'headless', 'lighthouse', 'preview', 'facebookexternalhit', 'whatsapp/', 'curl', 'python', 'wget'];
+  for (var i = 0; i < bots.length; i++) { if (ua.indexOf(bots[i]) > -1) return; }
+
   var base = 'https://api-claraia.claraia.com/tracking/redirect?company_id=c37a2390-a9db-4451-ad99-1d92086ab794&config_id=987d9192-b9fc-4a9f-bccb-7de95ab0d677&code_pattern=%5BSENHA+xxxx%5D&phone=551123660490';
   var shared = new URLSearchParams(window.location.search);
   shared.set('landing_page_url', window.location.href);
   shared.set('referrer_url', document.referrer || '');
-  var ua = navigator.userAgent.toLowerCase();
-  shared.set('device', /bot|crawl|spider/.test(ua) ? 'bot' : /mobile|android|iphone|ipod/.test(ua) ? 'mobile' : /tablet|ipad/.test(ua) ? 'tablet' : 'desktop');
+  shared.set('device', /mobile|android|iphone|ipod/.test(ua) ? 'mobile' : /tablet|ipad/.test(ua) ? 'tablet' : 'desktop');
 
   try {
     fetch('https://api-claraia.claraia.com/tracking/register-pageview', {
@@ -176,8 +180,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     return base + '&' + p.toString();
   }
 
+  // Só links de conversa de WhatsApp (wa.me, api.whatsapp.com, web.whatsapp.com, whatsapp://).
+  // Não troca menu (#ancoras), mapa, telefone, Instagram nem grupos (chat.whatsapp.com).
+  function ehWhatsApp(href) {
+    try {
+      var u = new URL(href, window.location.href);
+      return u.protocol === 'whatsapp:' || u.hostname === 'wa.me' ||
+             u.hostname === 'api.whatsapp.com' || u.hostname === 'web.whatsapp.com';
+    } catch (e) { return false; }
+  }
+
   function replaceLinks() {
-    document.querySelectorAll('a').forEach(function(a) {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      if (a.dataset.kihonTrk) return;
+      if (!ehWhatsApp(a.getAttribute('href') || '')) return;
+      a.dataset.kihonTrk = '1';
       a.href = buildLink(a);
     });
   }
@@ -185,7 +202,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   document.addEventListener('DOMContentLoaded', replaceLinks);
 
   var observer = new MutationObserver(replaceLinks);
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
 })();`,
       },
     ],
