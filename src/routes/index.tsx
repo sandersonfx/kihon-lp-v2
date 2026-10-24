@@ -8,14 +8,18 @@ import {
   Menu,
   Phone,
   Send,
-  Sparkles,
   X,
 } from "lucide-react";
 
 import ambiente from "../assets/ambiente.jpg";
 import atendimento from "../assets/atendimento.jpg";
 import cortes from "../assets/cortes.webp";
-import hero from "../assets/hero.webp";
+import heroDesktop from "../assets/hero-desktop.webp";
+import heroMobile from "../assets/hero-mobile.webp";
+import faixa1 from "../assets/faixa-1.webp";
+import faixa2 from "../assets/faixa-2.webp";
+import faixa3 from "../assets/faixa-3.webp";
+import faixa4 from "../assets/faixa-4.webp";
 import horario from "../assets/horario.png";
 import infantil from "../assets/infantil.jpg";
 import logo from "../assets/logo.png";
@@ -74,6 +78,8 @@ const services = [
   { title: "Corte Infantil", detail: "Cuidado leve e acolhedor", image: infantil },
   { title: "Manicure", detail: "Beleza em cada detalhe", image: manicure },
 ];
+
+const faixa = [faixa1, faixa2, faixa3, faixa4];
 
 const reasons = [
   { title: "Ambiente", text: "Confortável e acolhedor", image: ambiente },
@@ -149,10 +155,7 @@ function Index() {
   return (
     <main className="overflow-x-hidden bg-background text-foreground">
       <header className="absolute inset-x-0 top-0 z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-10 lg:py-7">
-          <a href="#inicio" aria-label="Kihon Hair Studio" className="relative z-50">
-            <img src={logo} alt="Kihon Hair Studio" className="h-auto w-32 object-contain lg:w-40" />
-          </a>
+        <div className="mx-auto flex max-w-7xl items-center justify-end px-5 py-5 lg:px-10 lg:py-7">
 
           <nav className="hidden items-center gap-8 text-sm font-semibold text-hero-foreground lg:flex" aria-label="Navegação principal">
             <a className="nav-link" href="#servicos">Serviços</a>
@@ -183,45 +186,42 @@ function Index() {
       </header>
 
       <section id="inicio" className="hero-section">
-        <div className="hero-glow" />
-        <div className="hero-lines" aria-hidden="true" />
-        <div className="hero-grid mx-auto grid min-h-[760px] max-w-7xl items-center px-5 pt-24 lg:min-h-[800px] lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:pt-20">
-          <div className="relative z-10 max-w-xl pt-14 text-hero-foreground lg:pt-0">
-            <div className="eyebrow eyebrow-light"><Sparkles className="size-4" /> Cuidado, beleza e bem-estar</div>
-            <h1 className="mt-6 text-5xl leading-[0.98] font-medium lg:text-7xl">Kihon Hair</h1>
-            <p className="mt-3 text-2xl leading-tight font-light lg:text-4xl">O salão de beleza<br />do Morumbi</p>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-hero-muted lg:text-lg">Seu cabelo em boas mãos, com uma equipe que entende de beleza, técnica e cuidado.</p>
-            <a className="button button-whatsapp mt-8" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer">
-              <WhatsAppIcon className="size-5" /> Fale conosco no WhatsApp
-            </a>
-          </div>
-
-          <div className="hero-portrait-wrap">
-            <img src={hero} alt="Resultado de cabelo produzido no Kihon Hair" className="hero-portrait" />
-          </div>
+        <picture>
+          <source media="(max-width: 767px)" srcSet={heroMobile} />
+          <img src={heroDesktop} alt="" className="hero-bg" fetchPriority="high" />
+        </picture>
+        <div className="hero-content">
+          <img src={logo} alt="Kihon Hair Studio" className="hero-logo" />
+          <h1>Kihon Hair – O Salão de Beleza do Morumbi</h1>
+          <p>O seu cabelo em boas mãos !</p>
+          <a className="button button-whatsapp button-pill" href={`${whatsappUrl}&text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`} target="_blank" rel="noreferrer">
+            Fale conosco no WhatsApp <WhatsAppIcon className="size-4" />
+          </a>
         </div>
-        <a href="#servicos" className="hero-scroll" aria-label="Ver nossos serviços"><span /> Role para conhecer</a>
       </section>
 
-      <section id="servicos" className="section-shell bg-background">
+      <section className="faixa-section" aria-label="Nosso ambiente">
+        <div className="faixa-grid">
+          {faixa.map((src, index) => (
+            <img src={src} alt={`Ambiente do Kihon Hair ${index + 1}`} key={src} loading="lazy" />
+          ))}
+        </div>
+      </section>
+
+      <section id="servicos" className="section-shell services-section">
         <div className="mx-auto max-w-7xl px-5 lg:px-10">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">O que fazemos</span>
-              <h2>Nossos serviços</h2>
-            </div>
-            <p>Cuidados completos para realçar sua beleza, respeitando seu estilo e a identidade de cada fio.</p>
-          </div>
+          <h2 className="services-title">Nossos serviços:</h2>
 
           <div className="services-grid">
             {services.map((service, index) => (
               <article className="service-card" key={service.title}>
                 <img src={service.image} alt={service.title} loading="lazy" />
-                <div className="service-overlay" />
-                <span className="service-number">0{index + 1}</span>
                 <div className="service-copy">
                   <h3>{service.title}</h3>
                   <p>{service.detail}</p>
+                  <a className="button button-whatsapp button-pill button-small" href={`${whatsappUrl}&text=${encodeURIComponent(`Olá! Gostaria de agendar: ${service.title}.`)}`} target="_blank" rel="noreferrer">
+                    Fale conosco no WhatsApp <WhatsAppIcon className="size-4" />
+                  </a>
                 </div>
               </article>
             ))}
