@@ -185,9 +185,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 767px) {
   .hero-section { min-height: 52rem; }
   .hero-bg { object-position: center bottom; }
-  .hero-content { min-height: 52rem; align-items: center; justify-content: flex-start; padding: 4.5rem 1.25rem 0; text-align: center; }
+  .hero-content { min-height: 52rem; align-items: center; justify-content: flex-start; padding: 4.5rem 1.25rem 2.75rem; text-align: center; }
   .hero-logo { width: 9rem; margin-bottom: 1.25rem; align-self: center; }
-  .hero-content .button { align-self: center; }
+  .hero-content .button { align-self: center; margin-top: auto; }
   .faixa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

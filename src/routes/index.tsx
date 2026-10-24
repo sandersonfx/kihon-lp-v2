@@ -24,7 +24,7 @@ import horario from "../assets/horario.png";
 import infantil from "../assets/infantil.jpg";
 import logo from "../assets/logo.png";
 import manicure from "../assets/manicure.jpg";
-import masculino from "../assets/masculino.jpg";
+import masculino from "../assets/masculino.webp";
 import massagem from "../assets/massagem.jpg";
 import mechas from "../assets/mechas.webp";
 import produtos from "../assets/produtos.jpg";
