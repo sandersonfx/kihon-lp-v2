@@ -14,6 +14,8 @@ import {
 import ambiente from "../assets/ambiente.jpg";
 import atendimento from "../assets/atendimento.jpg";
 import cortes from "../assets/cortes.webp";
+import depilacao from "../assets/depilacao.webp";
+import esmaltacao from "../assets/esmaltacao-alongamento.webp";
 import heroDesktop from "../assets/hero-desktop.webp";
 import heroMobile from "../assets/hero-mobile.webp";
 import faixa1 from "../assets/faixa-1.webp";
@@ -77,6 +79,8 @@ const services = [
   { title: "Corte Masculino", detail: "Precisão e estilo", image: masculino },
   { title: "Corte Infantil", detail: "Cuidado leve e acolhedor", image: infantil },
   { title: "Manicure", detail: "Beleza em cada detalhe", image: manicure },
+  { title: "Depilação", detail: "Masculina e feminina", image: depilacao },
+  { title: "Esmaltação em gel e alongamento", detail: "Unhas bonitas e duradouras", image: esmaltacao },
 ];
 
 const faixa = [faixa1, faixa2, faixa3, faixa4];
