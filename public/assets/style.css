@@ -105,8 +105,11 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
 }
+/* Foto quadrada em hero largo: mais altura para nao ficar muito ampliada */
+.hero__photo--tall { min-height: 520px; }
 @media (max-width: 800px) {
   .hero { grid-template-columns: 1fr; }
+  .hero__photo--tall { min-height: 340px; }
   .hero__content { padding: 44px 24px; text-align: left; }
   .hero__photo { min-height: 260px; order: -1; }
 }
